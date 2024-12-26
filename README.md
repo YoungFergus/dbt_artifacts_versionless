@@ -1,6 +1,6 @@
 # dbt Artifacts Package
 
-This package builds a mart of tables and views describing the project it is installed in. In pre V1 versions of the package, the artifacts dbt produces were uploaded to the warehouse, hence the name of the package. That's no longer the case, but the name has stuck!
+This package is a temporary clone of the dbt-artifacts package that can be used with DBT Cloud versionless
 
 [![Main branch test package](https://github.com/brooklyn-data/dbt_artifacts/actions/workflows/main_test_package.yml/badge.svg)](https://github.com/brooklyn-data/dbt_artifacts/actions/workflows/main_test_package.yml)
 [![Main branch lint package](https://github.com/brooklyn-data/dbt_artifacts/actions/workflows/main_lint_package.yml/badge.svg)](https://github.com/brooklyn-data/dbt_artifacts/actions/workflows/main_lint_package.yml)
@@ -46,7 +46,7 @@ See the generated [dbt docs site](https://brooklyn-data.github.io/dbt_artifacts/
 
 ```
 packages:
-  - package: brooklyn-data/dbt_artifacts
+  - package: YoungFergus/dbt_artifacts_versionless
     version: 2.7.0
 ```
 
