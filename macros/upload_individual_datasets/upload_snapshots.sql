@@ -1,6 +1,6 @@
 {% macro upload_snapshots(snapshots) -%}
 
-    {{ return(adapter.dispatch("get_snapshots_dml_sql", "dbt_artifacts")(snapshots)) }}
+    {{ return(adapter.dispatch("get_snapshots_dml_sql", "dbt_artifacts_versionless")(snapshots)) }}
 
 {%- endmacro %}
 
@@ -9,20 +9,20 @@
     {% if snapshots != [] %}
         {% set snapshot_values %}
         select
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(7)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(12)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(13) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(14)) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7)) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(10) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(11) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(12)) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(13) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(14)) }}
         from values
         {% for snapshot in snapshots -%}
             (
@@ -69,12 +69,12 @@
                     '{{ snapshot.original_file_path | replace('\\', '\\\\') }}', {# path #}
                     '{{ snapshot.checksum.checksum | replace('\\', '\\\\') }}', {# checksum #}
                     '{{ snapshot.config.strategy }}', {# strategy #}
-                    {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(snapshot.config.meta)) }}, {# meta #}
+                    {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(snapshot.config.meta)) }}, {# meta #}
                     '{{ snapshot.alias }}', {# alias #}
                     {% if var('dbt_artifacts_exclude_all_results', false) %}
                         null
                     {% else %}
-                        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(snapshot) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_results #}
+                        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(snapshot) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_results #}
                     {% endif %}
                 )
                 {%- if not loop.last %},{%- endif %}

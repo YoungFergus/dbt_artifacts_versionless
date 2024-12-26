@@ -1,24 +1,24 @@
 {% macro upload_test_executions(tests) -%}
-    {{ return(adapter.dispatch("get_test_executions_dml_sql", "dbt_artifacts")(tests)) }}
+    {{ return(adapter.dispatch("get_test_executions_dml_sql", "dbt_artifacts_versionless")(tests)) }}
 {%- endmacro %}
 
 {% macro default__get_test_executions_dml_sql(tests) -%}
     {% if tests != [] %}
         {% set test_execution_values %}
         select
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(12) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(13)) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(10) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(11) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(12) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(13)) }}
         from values
         {% for test in tests -%}
             (
@@ -81,7 +81,7 @@
                 null, {# rows_affected not available in Databricks #}
                 {{ 'null' if test.failures is none else test.failures }}, {# failures #}
                 '{{ test.message | replace("\\", "\\\\") | replace("'", "\\'") | replace('"', '\\"') | replace("\n", "\\n") }}', {# message #}
-                {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(test.adapter_response) | replace("\\", "\\\\") | replace("'", "\\'") | replace('"', '\\"')) }} {# adapter_response #}
+                {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(test.adapter_response) | replace("\\", "\\\\") | replace("'", "\\'") | replace('"', '\\"')) }} {# adapter_response #}
             )
             {%- if not loop.last %},{%- endif %}
 
@@ -150,19 +150,19 @@
     {% if tests != [] %}
         {% set test_execution_values %}
         select
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(12) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(13)) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(10) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(11) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(12) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(13)) }}
         from values
         {% for test in tests -%}
             (

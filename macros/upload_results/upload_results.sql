@@ -16,7 +16,7 @@
             {% do log("Uploading " ~ dataset.replace("_", " "), true) %}
 
             {# Get the results that need to be uploaded #}
-            {% set objects = dbt_artifacts.get_dataset_content(dataset) %}
+            {% set objects = dbt_artifacts_versionless.get_dataset_content(dataset) %}
 
             {# Upload in chunks to reduce the query size #}
             {% if dataset == 'models' %}
@@ -29,12 +29,12 @@
             {% for i in range(0, objects | length, upload_limit) -%}
 
                 {# Get just the objects to load on this loop #}
-                {% set content = dbt_artifacts.get_table_content_values(dataset, objects[i: i + upload_limit]) %}
+                {% set content = dbt_artifacts_versionless.get_table_content_values(dataset, objects[i: i + upload_limit]) %}
 
                 {# Insert the content into the metadata table #}
-                {{ dbt_artifacts.insert_into_metadata_table(
+                {{ dbt_artifacts_versionless.insert_into_metadata_table(
                     dataset=dataset,
-                    fields=dbt_artifacts.get_column_name_list(dataset),
+                    fields=dbt_artifacts_versionless.get_column_name_list(dataset),
                     content=content
                     )
                 }}

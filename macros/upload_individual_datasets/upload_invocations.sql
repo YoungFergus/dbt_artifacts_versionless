@@ -17,31 +17,31 @@
         {% endif %}
     {% endif %}
 
-    {{ return(adapter.dispatch("get_invocations_dml_sql", "dbt_artifacts")()) }}
+    {{ return(adapter.dispatch("get_invocations_dml_sql", "dbt_artifacts_versionless")()) }}
 {%- endmacro %}
 
 {% macro default__get_invocations_dml_sql() -%}
     {% set invocation_values %}
     select
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-        {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }}, ''),
-        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts')(12) }}, ''),
-        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts')(13) }}, ''),
-        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts')(14) }}, ''),
-        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts')(15) }}, ''),
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(16)) }},
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(17)) }},
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(18)) }},
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(19)) }}
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9) }},
+        {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(10) }},
+        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(11) }}, ''),
+        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(12) }}, ''),
+        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(13) }}, ''),
+        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(14) }}, ''),
+        nullif({{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(15) }}, ''),
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(16)) }},
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(17)) }},
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(18)) }},
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(19)) }}
     from values
     (
         '{{ invocation_id }}', {# command_invocation_id #}
@@ -120,7 +120,7 @@
             {% for env_variable in var('env_vars') %}
                 {% do env_vars_dict.update({env_variable: (env_var(env_variable, ''))}) %}
             {% endfor %}
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(env_vars_dict)) }}, {# env_vars #}
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(env_vars_dict)) }}, {# env_vars #}
         {% else %}
             null, {# env_vars #}
         {% endif %}
@@ -130,7 +130,7 @@
             {% for dbt_var in var('dbt_vars') %}
                 {% do dbt_vars_dict.update({dbt_var: (var(dbt_var, ''))}) %}
             {% endfor %}
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(dbt_vars_dict)) }}, {# dbt_vars #}
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(dbt_vars_dict)) }}, {# dbt_vars #}
         {% else %}
             null, {# dbt_vars #}
         {% endif %}
@@ -144,13 +144,13 @@
             {% endif %}
         {% endif %}
 
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(invocation_args_dict) | replace("'", "\\'")) }}, {# invocation_args #}
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(invocation_args_dict) | replace("'", "\\'")) }}, {# invocation_args #}
 
         {% set metadata_env = {} %}
         {% for key, value in dbt_metadata_envs.items() %}
             {% do metadata_env.update({key: value}) %}
         {% endfor %}
-        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(metadata_env) | replace('\\', '\\\\')) }} {# dbt_custom_envs #}
+        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(metadata_env) | replace('\\', '\\\\')) }} {# dbt_custom_envs #}
 
         )
     {% endset %}

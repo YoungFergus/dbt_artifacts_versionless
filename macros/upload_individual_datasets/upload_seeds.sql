@@ -1,5 +1,5 @@
 {% macro upload_seeds(seeds) -%}
-    {{ return(adapter.dispatch("get_seeds_dml_sql", "dbt_artifacts")(seeds)) }}
+    {{ return(adapter.dispatch("get_seeds_dml_sql", "dbt_artifacts_versionless")(seeds)) }}
 {%- endmacro %}
 
 {% macro default__get_seeds_dml_sql(seeds) -%}
@@ -7,18 +7,18 @@
     {% if seeds != [] %}
         {% set seed_values %}
         select
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(10)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(12)) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(10)) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(11) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(12)) }}
         from values
         {% for seed in seeds -%}
             (
@@ -61,12 +61,12 @@
                     '{{ seed.package_name }}', {# package_name #}
                     '{{ seed.original_file_path | replace('\\', '\\\\') }}', {# path #}
                     '{{ seed.checksum.checksum | replace('\\', '\\\\')}}', {# checksum #}
-                    {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(seed.config.meta)) }}, {# meta #}
+                    {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(seed.config.meta)) }}, {# meta #}
                     '{{ seed.alias }}', {# alias #}
                     {% if var('dbt_artifacts_exclude_all_results', false) %}
                         null
                     {% else %}
-                        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(seed) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_results #}
+                        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(seed) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_results #}
                     {% endif %}
                 )
                 {%- if not loop.last %},{%- endif %}

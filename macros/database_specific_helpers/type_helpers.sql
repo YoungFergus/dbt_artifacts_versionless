@@ -1,7 +1,7 @@
 {#- BOOLEAN -#}
 
 {% macro type_boolean() %}
-    {{ return(adapter.dispatch('type_boolean', 'dbt_artifacts')()) }}
+    {{ return(adapter.dispatch('type_boolean', 'dbt_artifacts_versionless')()) }}
 {% endmacro %}
 
 {% macro default__type_boolean() %}
@@ -11,7 +11,7 @@
 {#- JSON -#}
 
 {% macro type_json() %}
-    {{ return(adapter.dispatch('type_json', 'dbt_artifacts')()) }}
+    {{ return(adapter.dispatch('type_json', 'dbt_artifacts_versionless')()) }}
 {% endmacro %}
 
 {% macro default__type_json() %}
@@ -29,7 +29,7 @@
 {#- ARRAY -#}
 
 {% macro type_array() %}
-    {{ return(adapter.dispatch('type_array', 'dbt_artifacts')()) }}
+    {{ return(adapter.dispatch('type_array', 'dbt_artifacts_versionless')()) }}
 {% endmacro %}
 
 {% macro default__type_array() %}

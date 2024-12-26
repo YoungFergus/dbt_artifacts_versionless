@@ -58,20 +58,20 @@ packages:
 
     ```yml
     on-run-end:
-      - "{{ dbt_artifacts.upload_results(results) }}"
+      - "{{ dbt_artifacts_versionless.upload_results(results) }}"
     ```
 
     We recommend adding a conditional here so that the upload only occurs in your production environment, such as:
 
     ```yml
     on-run-end:
-      - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
+      - "{% if target.name == 'prod' %}{{ dbt_artifacts_versionless.upload_results(results) }}{% endif %}"
     ```
 
 4. Run the tables!
 
     ```
-    dbt run --select dbt_artifacts
+    dbt run --select dbt_artifacts_versionless
     ```
 
 ### Notes on upgrading
@@ -82,7 +82,7 @@ To upgrade and re-build, update the version number within `packages.yml` and the
 
 ```
 dbt deps
-dbt run --select dbt_artifacts
+dbt run --select dbt_artifacts_versionless
 ```
 
 Make sure this is updated in any database that you use your code base in.
@@ -94,7 +94,7 @@ The following configuration can be used to specify where the raw (sources) data 
 ```yml
 models:
   ...
-  dbt_artifacts:
+  dbt_artifacts_versionless:
     +database: your_destination_database # optional, default is your target database
     +schema: your_destination_schema # optional, default is your target schema
     staging:
@@ -151,7 +151,7 @@ Multiple modelled `dim` and `fct` models have been provided for ease of use, but
 # dbt_project.yml
 
 models:
-  dbt_artifacts:
+  dbt_artifacts_versionless:
     +enabled: false
     sources:
       +enabled: true

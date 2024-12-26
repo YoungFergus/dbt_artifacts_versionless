@@ -11,7 +11,7 @@
 
 {%- macro generate_surrogate_key(field_list) -%}
     {# Note - update the reference to `dbt_utils` to `dbt_artifacts` here #}
-    {{ return(adapter.dispatch('generate_surrogate_key', 'dbt_artifacts')(field_list)) }}
+    {{ return(adapter.dispatch('generate_surrogate_key', 'dbt_artifacts_versionless')(field_list)) }}
 {% endmacro %}
 
 {%- macro default__generate_surrogate_key(field_list) -%}

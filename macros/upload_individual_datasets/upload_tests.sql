@@ -1,5 +1,5 @@
 {% macro upload_tests(tests) -%}
-    {{ return(adapter.dispatch("get_tests_dml_sql", "dbt_artifacts")(tests)) }}
+    {{ return(adapter.dispatch("get_tests_dml_sql", "dbt_artifacts_versionless")(tests)) }}
 {%- endmacro %}
 
 {% macro default__get_tests_dml_sql(tests) -%}
@@ -7,15 +7,15 @@
     {% if tests != [] %}
         {% set test_values %}
         select
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(5)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(8)) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(9)) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(3) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(4) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(5)) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(6) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(7) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(8)) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(adapter.dispatch('column_identifier', 'dbt_artifacts_versionless')(9)) }}
         from values
         {% for test in tests -%}
             (
@@ -57,7 +57,7 @@
                     {% if var('dbt_artifacts_exclude_all_results', false) %}
                         null
                     {% else %}
-                        {{ adapter.dispatch('parse_json', 'dbt_artifacts')(tojson(test) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_fields #}
+                        {{ adapter.dispatch('parse_json', 'dbt_artifacts_versionless')(tojson(test) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"')) }} {# all_fields #}
                     {% endif %}
                 )
                 {%- if not loop.last %},{%- endif %}
