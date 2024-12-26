@@ -10,7 +10,7 @@ clean-targets: # folders to be removed by `dbt clean`
   - "logs"
 
 models:
-  dbt_artifacts:
+  dbt_artifacts_versionless:
     +materialized: view
     +file_format: delta
     sources:
